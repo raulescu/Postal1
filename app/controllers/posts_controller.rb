@@ -12,12 +12,18 @@ class PostsController < ApplicationController
 
      @post = Post.new( content: post_params[:content] )
      @post.user = current_user
-     
+
      if @post.save
         redirect_to posts_path
      else
         render posts_path
      end
   end
+
+  def user
+      @user = User.find( params[:user_id] )
+
+      @posts = Post.where( user: @user ).order( created_at: :desc )
+   end
 
 end
